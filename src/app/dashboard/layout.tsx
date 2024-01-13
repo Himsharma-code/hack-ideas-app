@@ -1,10 +1,8 @@
+import AddChallenge from "@/components/ChallengesModal";
 import {
   Navbar,
   NavbarBrand,
   NavbarContent,
-  NavbarItem,
-  Link,
-  Button,
   User,
   Popover,
   PopoverTrigger,
@@ -28,6 +26,7 @@ export default function DashBoardLayout({
         </NavbarBrand>
 
         <NavbarContent justify="end">
+          <AddChallenge />
           <Popover placement="bottom-end">
             <PopoverTrigger>
               <User name="Jane Doe" />

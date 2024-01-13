@@ -1,7 +1,8 @@
+import DashBoard from "@/pages/DashBoard";
 import React from "react";
 
-const DashBoard = () => {
-  return <div>DashBoard</div>;
+const DashBoardPage = () => {
+  return <DashBoard />;
 };
 
-export default DashBoard;
+export default DashBoardPage;

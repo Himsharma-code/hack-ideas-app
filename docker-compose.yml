@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=adminpassword
+      - MONGO_INITDB_DATABASE=nextjsdb
+  hack-ideas-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hack-ideas-app
+    ports:
+      - "3000:3000"
+ 
