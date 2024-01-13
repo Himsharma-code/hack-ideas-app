@@ -6,7 +6,7 @@ let cards = new Array(10).fill(1);
 const DashBoard = () => {
   return (
     <div>
-      {cards.map((d) => {
+      {cards.map((_, d) => {
         return <ChallengeCard key={d} />;
       })}
     </div>
