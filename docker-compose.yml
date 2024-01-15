@@ -1,7 +1,20 @@
 version: '3'
 
 services:
+  hack-ideas-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hack-ideas-app
+    restart: always
+    environment:
+      - NEXT_PUBLIC_DB_LOCAL_URL=mongodb://mongo:27017/hackideasDB
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
   mongo:
+    container_name: mongo
     image: mongo:latest
     ports:
       - "27017:27017"
@@ -9,11 +22,7 @@ services:
       MONGO_INITDB_DATABASE: hackideasDB
     volumes:
       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
-  hack-ideas-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: hack-ideas-app
-    ports:
-      - "3000:3000"
+
+
+  
  

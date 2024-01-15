@@ -1,7 +1,7 @@
 // src/db.ts
 import mongoose from "mongoose";
 
-const MONGODB_URI = "mongodb://localhost:27017/mydatabase";
+const MONGODB_URI = process.env.NEXT_PUBLIC_DB_LOCAL_URL || "";
 
 const connectDB = async () => {
   try {

@@ -1,14 +1,28 @@
 "use client";
 import { useState } from "react";
 import { Card, Input, Button } from "@nextui-org/react";
+import { request } from "@/utils/request";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const [employeeId, setEmployeeId] = useState("");
+  const router = useRouter();
 
-  const handleLogin = () => {
-    // Add any login logic here
-    // For simplicity, just pass the employeeId to the onLogin callback
-    // onLogin(employeeId);
+  const handleLogin = async () => {
+    try {
+      const response = await request("/api/users/login", "POST", {
+        employeeId,
+      });
+
+      if (response.success) {
+        sessionStorage.setItem("token", response?.data?.token || "");
+        router.push("/dashboard");
+      } else {
+        console.error(response.error);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   return (

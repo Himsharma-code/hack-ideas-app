@@ -21,9 +21,7 @@ export async function GET(request: NextRequest) {
           task: "$tasks", // Rename tasks to task
         },
       },
-    ])
-      .option({ maxTimeMS: 30000 })
-      .exec();
+    ]);
     console.log("allTasks", allTasks);
     return NextResponse.json({ allTasks, success: true });
   } catch (error: any) {

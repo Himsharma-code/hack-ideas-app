@@ -3,6 +3,7 @@ import User from "@/models/userModal";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import connectDB from "@/db";
+const secretKey = "yourSecretKey";
 
 // Connect to the MongoDB database
 connectDB();
@@ -29,18 +30,15 @@ export async function POST(request: NextRequest) {
     };
 
     // Create token
-    const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, {
+    const token = await jwt.sign(tokenData, secretKey, {
       expiresIn: "1d",
     });
 
     // Create response with success message and set token as a cookie
     const response = NextResponse.json({
+      data: { token },
       message: "Login successful",
       success: true,
-    });
-
-    response.cookies.set("token", token, {
-      httpOnly: true,
     });
 
     return response;
