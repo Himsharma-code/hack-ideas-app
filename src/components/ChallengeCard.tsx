@@ -7,7 +7,10 @@ import {
   Divider,
   Chip,
   Button,
+  Tooltip,
 } from "@nextui-org/react";
+import { TaskProps } from "@/app/dashboard/page";
+import { getLabel, getTagColor } from "@/utils/constants";
 
 const LikeIcon = (
   <svg
@@ -20,30 +23,42 @@ const LikeIcon = (
   </svg>
 );
 
-function ChallengeCard() {
+function ChallengeCard(task: TaskProps) {
+  const { title, description, tags, likes } = task;
+  const handleLikesToggle = (task: TaskProps) => {};
+
   return (
     <Card className="max-w-[1200px] mb-4 bg-gray-800 text-white rounded-md">
       <CardHeader className="flex gap-3 justify-between">
         <div className="flex flex-col">
-          <p className="text-lg font-bold">NextUI</p>
+          <p className="text-lg font-bold">{title}</p>
         </div>
-        <Button isIconOnly size="sm" color="default" aria-label="Like">
-          {LikeIcon}
-        </Button>
+        <Tooltip color="foreground" content={`${likes} likes`}>
+          <Button
+            onClick={() => handleLikesToggle(task)}
+            isIconOnly
+            size="sm"
+            color="default"
+            aria-label="Like"
+          >
+            {LikeIcon}
+          </Button>
+        </Tooltip>
       </CardHeader>
       <Divider className="bg-gray-600" />
       <CardBody>
-        <p>Make beautiful websites regardless of your design experience.</p>
+        <p>{description}</p>
       </CardBody>
       <Divider className="bg-gray-600" />
       <CardFooter>
         <div className="flex gap-4">
-          <Chip color="default">Default</Chip>
-          <Chip color="primary">Primary</Chip>
-          <Chip color="secondary">Secondary</Chip>
-          <Chip color="success">Success</Chip>
-          <Chip color="warning">Warning</Chip>
-          <Chip color="danger">Danger</Chip>
+          {tags.map((tag, i) => {
+            return (
+              <Chip key={i} color={getTagColor[tag] ?? "default"}>
+                {getLabel[tag] ?? "Other"}
+              </Chip>
+            );
+          })}
         </div>
       </CardFooter>
     </Card>

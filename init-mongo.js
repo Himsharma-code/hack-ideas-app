@@ -13,7 +13,7 @@ db.users.insertMany([
       {
         title: "Task 2",
         description: "Description 2",
-        tags: ["tag2", "tag3"],
+        tags: ["frontend", "backend"],
         likes: 3,
         likedBy: ["EMP001", "EMP003"],
       },
@@ -25,7 +25,7 @@ db.users.insertMany([
       {
         title: "Task 3",
         description: "Description 3",
-        tags: ["tag1", "tag3"],
+        tags: ["dsa", "ai"],
         likes: 8,
         likedBy: ["EMP001", "EMP003"],
       },

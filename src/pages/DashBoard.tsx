@@ -1,13 +1,16 @@
+import { TaskProps } from "@/app/dashboard/page";
 import ChallengeCard from "@/components/ChallengeCard";
 import React from "react";
 
-let cards = new Array(10).fill(1);
+type Props = {
+  allTasks: TaskProps[];
+};
 
-const DashBoard = () => {
+const DashBoard = ({ allTasks = [] }: Props) => {
   return (
     <div>
-      {cards.map((_, d) => {
-        return <ChallengeCard key={d} />;
+      {allTasks.map((task, d) => {
+        return <ChallengeCard key={d} {...task} />;
       })}
     </div>
   );

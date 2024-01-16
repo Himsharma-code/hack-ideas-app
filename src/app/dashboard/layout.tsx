@@ -1,4 +1,6 @@
+"use client";
 import AddChallenge from "@/components/ChallengesModal";
+import { useMyContext } from "@/context/AppContext";
 import {
   Navbar,
   NavbarBrand,
@@ -14,6 +16,8 @@ export default function DashBoardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { user } = useMyContext();
+
   return (
     <div>
       <Navbar
@@ -29,7 +33,11 @@ export default function DashBoardLayout({
           <AddChallenge />
           <Popover placement="bottom-end">
             <PopoverTrigger>
-              <User name="Jane Doe" />
+              <User
+                className="cursor-pointer"
+                avatarProps={{ src: "", name: "T" }}
+                name={user?.employeeId}
+              />
             </PopoverTrigger>
             <PopoverContent className="bg-slate-900">
               <div className="px-1 py-2">
