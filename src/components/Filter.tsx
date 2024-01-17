@@ -6,6 +6,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@nextui-org/react";
+import React from "react";
 
 interface FilterProps {
   filters: { label: string; value: string }[];
