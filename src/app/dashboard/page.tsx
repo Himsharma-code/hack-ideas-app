@@ -1,6 +1,6 @@
 "use client";
 import Filter from "@/components/Filter";
-import useAllUserTasks from "@/hooks/useAllUserTasks";
+import { useMyContext } from "@/context/AppContext";
 import DashBoard from "@/pages/DashBoard";
 
 import React, { useEffect, useState } from "react";
@@ -12,6 +12,8 @@ export type TaskProps = {
   tags: string[];
   likes: number;
   likedBy: string[];
+  createdBy: string;
+  createdAt: string;
 };
 
 const filters = [
@@ -19,23 +21,26 @@ const filters = [
     label: "Most liked",
     value: "most_liked",
   },
-  // {
-  //   label: "My task",
-  //   value: "me",
-  // },
+  {
+    label: "Recent",
+    value: "recent",
+  },
 ];
 
 const DashBoardPage = () => {
-  const { allTasks, setAllTasks, fetchAllTasks } = useAllUserTasks();
+  const { allTasks, setAllTasks, fetchTasks } = useMyContext();
 
   const handleApply = (selectedOptions: string[]) => {
     if (selectedOptions.includes("most_liked")) {
       const tasksClone = [...allTasks];
       const sortedTasks = tasksClone.sort((a, b) => b.likes - a.likes);
       setAllTasks(sortedTasks);
-    } else {
+    } else if (selectedOptions.includes("recent")) {
       const tasksClone = [...allTasks];
-      const sortedTasks = tasksClone.sort((a, b) => a.likes - b.likes);
+      const sortedTasks = tasksClone.sort(
+        (a, b) =>
+          (new Date(b.createdAt) as any) - (new Date(a.createdAt) as any)
+      );
       setAllTasks(sortedTasks);
     }
 
@@ -44,10 +49,10 @@ const DashBoardPage = () => {
 
   return (
     <>
-      <div className="mb-4">
+      <div className="mb-4 text-end">
         <Filter filters={filters} handleApply={handleApply} />
       </div>
-      <DashBoard fetchAllTasks={fetchAllTasks} allTasks={allTasks} />
+      <DashBoard fetchAllTasks={fetchTasks} allTasks={allTasks} />
     </>
   );
 };

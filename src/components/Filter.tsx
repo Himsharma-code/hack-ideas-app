@@ -13,42 +13,42 @@ interface FilterProps {
 }
 
 const Filter: React.FC<FilterProps> = ({ filters, handleApply }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
   const handleCheckboxChange = (value: string) => {
-    setSelectedFilters((prevSelected) => {
-      if (prevSelected.includes(value)) {
-        return prevSelected.filter((filter) => filter !== value);
-      } else {
-        return [...prevSelected, value];
-      }
-    });
+    setSelectedFilters([value]);
   };
 
   return (
-    <Popover>
+    <Popover isOpen={isOpen} onOpenChange={(open) => setIsOpen(open)}>
       <PopoverTrigger>
         <Button> Filter</Button>
       </PopoverTrigger>
       <PopoverContent>
         <div className="p-4">
-          <h3 className="mb-2">Filters</h3>
-          {filters.map((filter) => (
-            <Checkbox
-              key={filter.value}
-              isSelected={!!selectedFilters.includes(filter.value)}
-              onChange={(e) => {
-                console.log("e", e);
-                handleCheckboxChange(filter.value);
-              }}
-            >
-              {filter.label}
-            </Checkbox>
-          ))}
+          <div className=" flex flex-col">
+            {filters.map((filter) => (
+              <Checkbox
+                key={filter.value}
+                isSelected={!!selectedFilters.includes(filter.value)}
+                onChange={(e) => {
+                  console.log("e", e);
+                  handleCheckboxChange(filter.value);
+                }}
+              >
+                {filter.label}
+              </Checkbox>
+            ))}
+          </div>
+
           <div className="mt-4">
             <Button onClick={() => setSelectedFilters([])}>Clear</Button>
             <Button
-              onClick={() => handleApply(selectedFilters)}
+              onClick={() => {
+                setIsOpen(false);
+                handleApply(selectedFilters);
+              }}
               className="ml-2"
             >
               Apply

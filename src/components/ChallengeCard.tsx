@@ -9,7 +9,11 @@ import {
   Button,
 } from "@nextui-org/react";
 import { TaskProps } from "@/app/dashboard/page";
-import { getLabel, getTagColor } from "@/utils/constants";
+import {
+  formatTimestampToDDMMYYYY,
+  getLabel,
+  getTagColor,
+} from "@/utils/constants";
 import { useMyContext } from "@/context/AppContext";
 import { request } from "@/utils/request";
 
@@ -25,9 +29,9 @@ const LikeIcon = (
 );
 
 function ChallengeCard(task: TaskProps & { fetchAllTasks: () => void }) {
-  const { title, description, tags, likes, likedBy, fetchAllTasks } = task;
+  const { title, description, tags, likes, likedBy, fetchAllTasks, createdBy } =
+    task;
   const { user, setUser } = useMyContext();
-
   const isLikedByUser = likedBy.includes(user?.employeeId);
   const handleLikesToggle = async (task: TaskProps) => {
     console.log("task", task);
@@ -48,10 +52,13 @@ function ChallengeCard(task: TaskProps & { fetchAllTasks: () => void }) {
   };
 
   return (
-    <Card className="max-w-[1200px] mb-4 bg-gray-800 text-white rounded-md">
+    <Card className="min-w-[300px] bg-gray-800 text-white rounded-md">
       <CardHeader className="flex gap-3 justify-between">
         <div className="flex flex-col">
-          <p className="text-lg font-bold">{title}</p>
+          <p className="text-lg font-bold">
+            {title}{" "}
+            <span className="text-sm italic text-gray-500">~{createdBy}</span>
+          </p>
         </div>
         <Button
           onClick={() => handleLikesToggle(task)}
@@ -69,8 +76,8 @@ function ChallengeCard(task: TaskProps & { fetchAllTasks: () => void }) {
         <p>{description}</p>
       </CardBody>
       <Divider className="bg-gray-600" />
-      <CardFooter>
-        <div className="flex gap-4">
+      <CardFooter className="flex justify-between">
+        <div className="flex flex-wrap gap-4">
           {tags.map((tag, i) => {
             return (
               <Chip key={i} color={getTagColor[tag] ?? "default"}>
@@ -78,6 +85,11 @@ function ChallengeCard(task: TaskProps & { fetchAllTasks: () => void }) {
               </Chip>
             );
           })}
+        </div>
+        <div>
+          <span className="text-xs text-gray-200">
+            {formatTimestampToDDMMYYYY(task?.createdAt)}
+          </span>
         </div>
       </CardFooter>
     </Card>

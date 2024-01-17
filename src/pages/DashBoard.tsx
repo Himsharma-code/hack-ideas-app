@@ -9,7 +9,10 @@ type Props = {
 
 const DashBoard = ({ allTasks = [], fetchAllTasks }: Props) => {
   return (
-    <div>
+    <div
+      className="grid gap-5"
+      // className="flex flex-wrap gap-5"
+    >
       {allTasks.map((task, d) => {
         return (
           <ChallengeCard key={d} fetchAllTasks={fetchAllTasks} {...task} />

@@ -29,14 +29,21 @@ const Login = () => {
     <div className="flex justify-center">
       <Card className="max-w-[500px] w-full p-6 bg-gray-800 text-white rounded-md">
         <h1 className="text-2xl font-bold mb-4">Hack Ideas</h1>
-        <Input
-          label="Employee ID"
-          // placeholder="Employee ID"
-          value={employeeId}
-          onChange={(e) => setEmployeeId(e.target.value)}
-          className="mb-4"
-        />
-        <Button onClick={handleLogin}>Login</Button>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleLogin();
+          }}
+        >
+          <Input
+            label="Employee ID"
+            // placeholder="Employee ID"
+            value={employeeId}
+            onChange={(e) => setEmployeeId(e.target.value)}
+            className="mb-4"
+          />
+          <Button type="submit">Login</Button>
+        </form>
       </Card>
     </div>
   );

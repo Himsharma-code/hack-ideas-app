@@ -62,7 +62,7 @@ export default function DashBoardLayout({
           </Popover>
         </NavbarContent>
       </Navbar>
-      <div className="p-6">{children}</div>
+      <div className="p-6 ">{children}</div>
     </div>
   );
 }

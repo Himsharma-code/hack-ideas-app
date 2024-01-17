@@ -9,6 +9,10 @@ if (!mongoose.models.User) {
     },
     tasks: [
       {
+        id: {
+          type: String,
+          unique: true,
+        },
         title: {
           type: String,
           required: true,
@@ -28,6 +32,14 @@ if (!mongoose.models.User) {
         likedBy: {
           type: [String],
           default: [],
+        },
+        createdBy: {
+          type: String, // Change the type according to your employeeId type
+          required: true,
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
         },
       },
     ],

@@ -4,12 +4,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Start with docker 
 
-1. docker build -t hack-ideas-app .
-2. docker run -p 3000:3000 hack-ideas-app
+1. docker-compose up
 
-## Start locally
-
-1. nvm use ( it will get version from .nvmrc  )
-2. yarn && yarn dev
+=> FE on port 3000
+=> BE on port 27017
 
 

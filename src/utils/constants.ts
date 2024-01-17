@@ -52,3 +52,13 @@ export const tags: TagProps[] = [
 ];
 
 export const secretKey = "yourSecretKey";
+
+export function formatTimestampToDDMMYYYY(timestamp: string) {
+  const date = new Date(timestamp);
+
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are 0-indexed
+  const year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
+}

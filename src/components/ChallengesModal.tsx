@@ -12,13 +12,17 @@ import {
   Select,
   SelectItem,
   Chip,
+  Textarea,
 } from "@nextui-org/react";
 import { TagProps, getLabel, getTagColor, tags } from "@/utils/constants";
 import { TaskProps } from "@/app/dashboard/page";
 import { request } from "@/utils/request";
+import { useMyContext } from "@/context/AppContext";
 
 function AddChallenge() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { fetchTasks } = useMyContext();
+
   const [task, setTask] = useState<
     Pick<TaskProps, "title" | "description"> & { tags: TagProps[] }
   >({
@@ -56,6 +60,7 @@ function AddChallenge() {
       const response = await request("/api/users/addTask", "POST", payload);
 
       if (response.success) {
+        fetchTasks();
       } else {
         console.error(response.error);
       }
@@ -87,11 +92,10 @@ function AddChallenge() {
                   name="title"
                   onChange={handleChange}
                 />
-                <Input
+                <Textarea
                   name="description"
                   variant="bordered"
                   size="lg"
-                  type="textarea"
                   label="Description"
                   value={task.description}
                   onChange={handleChange}

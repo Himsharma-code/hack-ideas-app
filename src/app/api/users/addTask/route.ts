@@ -42,11 +42,11 @@ export async function POST(req: NextRequest) {
     }
 
     user.tasks.push({
-      ...taskData,
       id: generateUniqueId(),
-      createdBy: user.employeeId,
+      createdBy: user?.employeeId,
       likedBy: [],
       likes: 0,
+      ...taskData,
     });
     await user.save();
 
