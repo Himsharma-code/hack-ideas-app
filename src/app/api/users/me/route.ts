@@ -19,7 +19,10 @@ export async function GET(request: NextRequest) {
 
     const decodedToken: any = jwt.verify(token, secretKey);
 
-    const user = await User.findById(decodedToken.id).select("-__v -_id");
+    // Use findOne instead of findById to query by employeeId
+    const user = await User.findOne({
+      employeeId: decodedToken.employeeId,
+    }).select("-__v -_id");
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });

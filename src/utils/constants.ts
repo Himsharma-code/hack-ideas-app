@@ -50,3 +50,5 @@ export const tags: TagProps[] = [
     value: "ml",
   },
 ];
+
+export const secretKey = "yourSecretKey";

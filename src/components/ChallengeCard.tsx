@@ -7,7 +7,6 @@ import {
   Divider,
   Chip,
   Button,
-  Tooltip,
 } from "@nextui-org/react";
 import { TaskProps } from "@/app/dashboard/page";
 import { getLabel, getTagColor } from "@/utils/constants";
@@ -33,17 +32,15 @@ function ChallengeCard(task: TaskProps) {
         <div className="flex flex-col">
           <p className="text-lg font-bold">{title}</p>
         </div>
-        <Tooltip color="foreground" content={`${likes} likes`}>
-          <Button
-            onClick={() => handleLikesToggle(task)}
-            isIconOnly
-            size="sm"
-            color="default"
-            aria-label="Like"
-          >
-            {LikeIcon}
-          </Button>
-        </Tooltip>
+        <Button
+          onClick={() => handleLikesToggle(task)}
+          size="sm"
+          color="default"
+          aria-label="Like"
+        >
+          <span className="mr-2 font-medium text-[14px]">{likes}</span>{" "}
+          {LikeIcon}
+        </Button>
       </CardHeader>
       <Divider className="bg-gray-600" />
       <CardBody>

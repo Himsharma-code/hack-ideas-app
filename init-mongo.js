@@ -4,6 +4,7 @@ db.users.insertMany([
     employeeId: "EMP001",
     tasks: [
       {
+        id: "212", // Generate a new ObjectId for the task
         title: "Task 1",
         description: "Description 1",
         tags: ["tag1", "tag2"],
@@ -11,6 +12,7 @@ db.users.insertMany([
         likedBy: ["EMP002", "EMP003"],
       },
       {
+        id: "222", // Generate a new ObjectId for the task
         title: "Task 2",
         description: "Description 2",
         tags: ["frontend", "backend"],
@@ -23,6 +25,7 @@ db.users.insertMany([
     employeeId: "EMP002",
     tasks: [
       {
+        id: "21", // Generate a new ObjectId for the task
         title: "Task 3",
         description: "Description 3",
         tags: ["dsa", "ai"],
@@ -30,9 +33,10 @@ db.users.insertMany([
         likedBy: ["EMP001", "EMP003"],
       },
       {
+        id: "214", // Generate a new ObjectId for the task
         title: "Task 4",
         description: "Description 4",
-        tags: ["tag2", "tag4"],
+        tags: ["frontend", "backend"],
         likes: 2,
         likedBy: ["EMP002", "EMP004"],
       },

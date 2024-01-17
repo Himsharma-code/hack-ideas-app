@@ -1,5 +1,8 @@
 // components/MyContext.tsx
+"use client";
+import { isLoggedIn, logout } from "@/utils/isLoggedIn";
 import { request } from "@/utils/request";
+import { usePathname, useRouter } from "next/navigation";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 interface MyContextProps {
@@ -16,6 +19,8 @@ export const AppContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const router = useRouter();
+  const pathname = usePathname();
   const [someState, setSomeState] = useState("initial value");
   const [user, setUser] = useState(null);
 
@@ -27,11 +32,15 @@ export const AppContextProvider = ({
           setUser(data.data.user);
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        logout();
+        setUser(null);
+        router.push("/");
       }
     };
-    fetchData();
-  }, []);
+    if (isLoggedIn()) {
+      fetchData();
+    }
+  }, [pathname]);
 
   const contextValue: MyContextProps = {
     someState,
