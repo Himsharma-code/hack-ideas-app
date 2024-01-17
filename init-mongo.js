@@ -7,7 +7,7 @@ db.users.insertMany([
         id: "212", // Generate a new ObjectId for the task
         title: "Task 1",
         description: "Description 1",
-        tags: ["tag1", "tag2"],
+        tags: ["frontend", "backend"],
         likes: 5,
         likedBy: ["EMP002", "EMP003"],
         createdBy: "EMP001", // Added createdBy field
