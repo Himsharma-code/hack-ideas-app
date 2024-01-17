@@ -1,12 +1,12 @@
 "use client";
 import Filter from "@/components/Filter";
+import useAllUserTasks from "@/hooks/useAllUserTasks";
 import DashBoard from "@/pages/DashBoard";
-import { isLoggedIn } from "@/utils/isLoggedIn";
-import { request } from "@/utils/request";
-import { useRouter } from "next/navigation";
+
 import React, { useEffect, useState } from "react";
 
 export type TaskProps = {
+  id: string;
   title: string;
   description: string;
   tags: string[];
@@ -26,28 +26,7 @@ const filters = [
 ];
 
 const DashBoardPage = () => {
-  const router = useRouter();
-  const [allTasks, setAllTasks] = useState<TaskProps[]>([]);
-
-  useEffect(() => {
-    if (!isLoggedIn()) {
-      router.push("/");
-    } else {
-      const fetchData = async () => {
-        try {
-          const data = await request("/api/users/getAllUserTasks", "GET");
-          if (data.success) {
-            setAllTasks(data?.data?.allTasks || []);
-          } else {
-            console.error(data.error);
-          }
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      };
-      fetchData();
-    }
-  }, []);
+  const { allTasks, setAllTasks, fetchAllTasks } = useAllUserTasks();
 
   const handleApply = (selectedOptions: string[]) => {
     if (selectedOptions.includes("most_liked")) {
@@ -68,7 +47,7 @@ const DashBoardPage = () => {
       <div className="mb-4">
         <Filter filters={filters} handleApply={handleApply} />
       </div>
-      <DashBoard allTasks={allTasks} />
+      <DashBoard fetchAllTasks={fetchAllTasks} allTasks={allTasks} />
     </>
   );
 };

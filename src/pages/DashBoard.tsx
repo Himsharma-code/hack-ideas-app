@@ -4,13 +4,16 @@ import React from "react";
 
 type Props = {
   allTasks: TaskProps[];
+  fetchAllTasks: () => void;
 };
 
-const DashBoard = ({ allTasks = [] }: Props) => {
+const DashBoard = ({ allTasks = [], fetchAllTasks }: Props) => {
   return (
     <div>
       {allTasks.map((task, d) => {
-        return <ChallengeCard key={d} {...task} />;
+        return (
+          <ChallengeCard key={d} fetchAllTasks={fetchAllTasks} {...task} />
+        );
       })}
     </div>
   );

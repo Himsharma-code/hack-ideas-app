@@ -10,6 +10,8 @@ import {
 } from "@nextui-org/react";
 import { TaskProps } from "@/app/dashboard/page";
 import { getLabel, getTagColor } from "@/utils/constants";
+import { useMyContext } from "@/context/AppContext";
+import { request } from "@/utils/request";
 
 const LikeIcon = (
   <svg
@@ -22,9 +24,28 @@ const LikeIcon = (
   </svg>
 );
 
-function ChallengeCard(task: TaskProps) {
-  const { title, description, tags, likes } = task;
-  const handleLikesToggle = (task: TaskProps) => {};
+function ChallengeCard(task: TaskProps & { fetchAllTasks: () => void }) {
+  const { title, description, tags, likes, likedBy, fetchAllTasks } = task;
+  const { user, setUser } = useMyContext();
+
+  const isLikedByUser = likedBy.includes(user?.employeeId);
+  const handleLikesToggle = async (task: TaskProps) => {
+    console.log("task", task);
+    try {
+      const response = await request("/api/users/likeTask", "POST", {
+        is_liked: !isLikedByUser,
+        id: task.id,
+      });
+
+      if (response.success) {
+        fetchAllTasks();
+      } else {
+        console.error(response.error);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   return (
     <Card className="max-w-[1200px] mb-4 bg-gray-800 text-white rounded-md">
@@ -35,7 +56,8 @@ function ChallengeCard(task: TaskProps) {
         <Button
           onClick={() => handleLikesToggle(task)}
           size="sm"
-          color="default"
+          color={isLikedByUser ? "success" : "default"}
+          // color="success"
           aria-label="Like"
         >
           <span className="mr-2 font-medium text-[14px]">{likes}</span>{" "}

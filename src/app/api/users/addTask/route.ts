@@ -16,7 +16,7 @@ const generateUniqueId = () => {
   return `${timestamp}${randomString}`;
 };
 
-export async function POST(req: NextRequest, res: NextApiResponse) {
+export async function POST(req: NextRequest) {
   try {
     const token = req.headers.get("Authorization")?.replace("Bearer ", "");
 
@@ -29,7 +29,10 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     const { taskData } = await req.json();
 
     if (!taskData) {
-      return res.status(400).json({ error: "Invalid request data" });
+      return NextResponse.json(
+        { error: "Invalid request data" },
+        { status: 400 }
+      );
     }
 
     const user = await User.findOne({
@@ -37,17 +40,21 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     }).select("-__v -_id");
 
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
     user.tasks.push({ ...taskData, id: generateUniqueId() });
     await user.save();
 
-    return res
-      .status(200)
-      .json({ success: true, message: "Task added successfully" });
+    return NextResponse.json(
+      { success: true, message: "Task added successfully" },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error adding task:", error);
-    return res.status(500).json({ error: "Internal Server Error" });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
